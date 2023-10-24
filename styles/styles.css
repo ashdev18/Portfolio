@@ -1,54 +1,108 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1b1b1b;
-    color: #fff;
+    background-color: #f2f2f2;
+    color: #4d4d4d;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile {
+    text-align: center;
+    margin: 20px 0;
     padding: 20px;
+    width: 100%;
 }
-
-.banner, .profile {
-    flex: 1;
-    margin: 20px;
-}
-
-    .banner h1, .profile h2 {
-        margin-top: 0;
-    }
 
     .banner img, .profile img {
-        max-width: 100%;
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
     }
+
+.banner h1 {
+    font-size: 3.2em;
+    margin: 0;
+    color: #ffffff;
+}
+
+.banner a, .profile a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 .assets {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    padding: 20px;
-    justify-content: space-around;
+    padding: 40px;
+    justify-content: center;
+    background-color: #f9f9f9;
 }
 
 .asset-card {
     width: calc(25% - 20px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background: #1c1c1c;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    background-color: #2c2c2c;
-    border-radius: 10px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-    .asset-card img {
-        max-width: 100%;
-        height: 150px;
-        object-fit: cover;
+    .asset-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #111;
-}
+    .asset-card img {
+        border-radius: 10px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .asset-card h2 {
+        font-size: 1.5em;
+        color: #ffcc00;
+        margin: 0 0 10px;
+    }
+
+    .asset-card p {
+        font-size: 1em;
+        color: #ccc;
+        margin: 0 0 10px;
+    }
+
+    .asset-card a {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #ffcc00;
+        color: #111;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
