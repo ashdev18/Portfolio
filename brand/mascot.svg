@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ash Dev mascot: a sprout robot with a leaf hat, sitting in a pot">
+  <defs>
+    <clipPath id="ring"><circle cx="256" cy="256" r="240"/></clipPath>
+  </defs>
+  <style>
+    .ol { stroke: #1D2420; stroke-width: 8; stroke-linejoin: round; stroke-linecap: round; }
+  </style>
+  <circle cx="256" cy="256" r="240" fill="#B6D97A"/>
+  <g clip-path="url(#ring)">
+    <!-- neck pistons -->
+    <rect class="ol" x="220" y="330" width="20" height="50" rx="6" fill="#C9CDC3"/>
+    <rect class="ol" x="272" y="330" width="20" height="50" rx="6" fill="#C9CDC3"/>
+    <!-- pot -->
+    <path class="ol" d="M128 398 H384 L362 520 H150 Z" fill="#F1F2EC"/>
+    <path d="M370 410 L352 520" stroke="#D5D8CE" stroke-width="18"/>
+    <rect class="ol" x="112" y="372" width="288" height="36" rx="10" fill="#F1F2EC"/>
+    <path d="M128 400 H384" stroke="#D5D8CE" stroke-width="6"/>
+    <!-- ear -->
+    <rect class="ol" x="144" y="250" width="24" height="40" rx="7" fill="#D5D8CE"/>
+    <!-- head -->
+    <rect class="ol" x="160" y="186" width="192" height="160" rx="26" fill="#F1F2EC"/>
+    <path d="M168 300 V318 Q168 338 188 338 H330" fill="none" stroke="#D5D8CE" stroke-width="10" stroke-linecap="round"/>
+    <!-- hat shadow on the head -->
+    <path d="M164 206 Q256 236 348 206 V214 Q256 250 164 214 Z" fill="#D5D8CE"/>
+    <!-- eyes: sleepy bar pupils -->
+    <circle class="ol" cx="216" cy="262" r="22" fill="#FFFFFF"/>
+    <circle class="ol" cx="296" cy="262" r="22" fill="#FFFFFF"/>
+    <rect class="pupil" x="203" y="258" width="26" height="9" rx="4.5" fill="#1D2420"/>
+    <rect class="pupil" x="283" y="258" width="26" height="9" rx="4.5" fill="#1D2420"/>
+    <!-- mouth -->
+    <path d="M238 296 q9 -6 18 0 q9 6 18 0" fill="none" stroke="#1D2420" stroke-width="6" stroke-linecap="round"/>
+    <!-- chin grille -->
+    <rect class="ol" x="234" y="310" width="44" height="22" rx="5" fill="#F1F2EC" stroke-width="6"/>
+    <path d="M246 315 V327 M256 315 V327 M266 315 V327" stroke="#1D2420" stroke-width="4" stroke-linecap="round"/>
+    <!-- antennae -->
+    <g class="antennae">
+      <path d="M222 146 C210 112 196 96 176 92" fill="none" stroke="#1D2420" stroke-width="30" stroke-linecap="round"/>
+      <path d="M222 146 C210 112 196 96 176 92" fill="none" stroke="#7FB04A" stroke-width="16" stroke-linecap="round"/>
+      <path d="M290 146 C302 112 316 96 336 92" fill="none" stroke="#1D2420" stroke-width="30" stroke-linecap="round"/>
+      <path d="M290 146 C302 112 316 96 336 92" fill="none" stroke="#7FB04A" stroke-width="16" stroke-linecap="round"/>
+      <rect class="ol" x="208" y="132" width="28" height="24" rx="5" fill="#F1F2EC" stroke-width="6"/>
+      <rect class="ol" x="276" y="132" width="28" height="24" rx="5" fill="#F1F2EC" stroke-width="6"/>
+    </g>
+    <!-- leaf hat -->
+    <g class="hat">
+      <path class="ol" d="M146 190 Q170 134 256 132 Q342 134 366 190 Z" fill="#2F6B3B"/>
+      <path class="ol" d="M98 192 Q256 150 414 192 Q256 236 98 192 Z" fill="#2F6B3B"/>
+      <path d="M120 194 Q256 166 392 194" fill="none" stroke="#7FB04A" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="196" cy="160" r="6" fill="#7FB04A"/>
+      <circle cx="232" cy="150" r="4" fill="#7FB04A"/>
+      <circle cx="306" cy="156" r="5" fill="#7FB04A"/>
+      <circle cx="334" cy="172" r="4" fill="#7FB04A"/>
+      <rect x="262" y="146" width="9" height="9" rx="2" fill="#7FB04A" transform="rotate(20 266 150)"/>
+    </g>
+  </g>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#1D2420" stroke-width="8"/>
+</svg>
