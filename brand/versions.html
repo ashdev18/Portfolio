@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mascot versions</title>
+<style>
+  body { margin: 0; padding: 28px; background: #EEF0EA; color: #26302A; font: 14px/1.4 system-ui, sans-serif; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 28px; align-items: end; margin-bottom: 36px; }
+  .cell { display: grid; gap: 6px; justify-items: center; }
+  .cell svg { display: block; }
+  .tile { background: #A3D263; border-radius: 22%; display: grid; place-items: center; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="cell"><img src="../images/ashdev%20logoring.png" width="260" alt=""><span>Your original</span></div>
+  <div class="cell" id="soft"></div>
+  <div class="cell" id="sticker"></div>
+  <div class="cell" id="marks"></div>
+</div>
+<h2>Moods (soft version)</h2>
+<div class="row" id="moods"></div>
+<script src="robot.js"></script>
+<script>
+  const put = (id, html, label, w = 260) => {
+    const c = document.getElementById(id);
+    c.insertAdjacentHTML("beforeend", `<div class="cell"><div style="width:${w}px">${html}</div><span>${label}</span></div>`);
+  };
+  put("soft", robot({ style: "soft" }), "A · Soft, closest to the original");
+  put("sticker", robot({ style: "sticker" }), "B · Bold sticker");
+  document.getElementById("marks").innerHTML =
+    `<div style="display:flex;gap:14px;align-items:end">${[110, 56, 32, 16].map(s =>
+      `<div class="tile" style="width:${s}px;height:${s}px"><div style="width:${s * 0.9}px">${robot({ style: "mark" })}</div></div>`).join("")}</div><span>C · Head mark for small sizes</span>`;
+  for (const m of ["deadpan", "happy", "surprised", "sleepy"]) put("moods", robot({ mood: m }), m, 200);
+</script>
+</body>
+</html>

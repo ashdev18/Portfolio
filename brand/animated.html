@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ash Dev mascot</title>
 <style>
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #F1F2EC; font: 14px/1.4 system-ui, sans-serif; color: #1D2420; }
-  #bot { width: min(70vw, 360px); cursor: pointer; touch-action: manipulation; user-select: none; }
-  #bot svg { width: 100%; height: auto; overflow: visible; display: block; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #EEF0EA; font: 14px/1.4 system-ui, sans-serif; color: #27302B; }
+  #bot { width: min(78vw, 380px); cursor: pointer; touch-action: manipulation; user-select: none; }
+  #bot svg { width: 100%; height: auto; display: block; }
   p { text-align: center; margin: 12px 0 0; opacity: .6; }
 </style>
 </head>
@@ -16,55 +16,44 @@
   <div id="bot" role="button" tabindex="0" aria-label="Poke the mascot"></div>
   <p>Click or tap him.</p>
 </div>
+<script src="robot.js"></script>
 <script>
-// The hat and antennae hang off the head on damped springs, so they lag and overshoot when he hops.
-fetch("mascot.svg").then(r => r.text()).then(src => {
-  const host = document.getElementById("bot");
-  host.innerHTML = src;
-  const svg = host.querySelector("svg");
-  const parts = {
-    hat: svg.querySelector(".hat"),
-    ant: svg.querySelector(".antennae"),
-    pupils: [...svg.querySelectorAll(".pupil")]
-  };
-  // Everything above the pot rides the "body" offset; the pot stays put.
-  const body = [...svg.querySelectorAll("g[clip-path] > *")].filter(n => !/M128 398|M370 410|x="112"|M128 400/.test(n.outerHTML.slice(0, 80)));
+// The head hops; the hat and antennae hang off it on damped springs, so they lag and overshoot.
+const host = document.getElementById("bot");
+host.innerHTML = robot({});
+const svg = host.querySelector("svg");
+const head = svg.querySelector(".head");
+const hatRig = svg.querySelector(".hat").parentNode;
+const hatBase = hatRig.getAttribute("transform") || "";
+const ant = svg.querySelector(".antennae");
+const body = svg.querySelector(".body");
+const pupils = [...svg.querySelectorAll(".pupil")];
 
-  const spring = (k, d) => ({ x: 0, v: 0, k, d });
-  const hop = { y: 0, v: 0 };
-  const hat = spring(220, 9), ant = spring(140, 5), tilt = spring(90, 6);
-  let blink = 0, nextBlink = 1.5, last = performance.now();
+const hop = { y: 0, v: 0 };
+const hat = { x: 0, v: 0, k: 260, d: 10 }, wob = { x: 0, v: 0, k: 120, d: 4 };
+const spring = (s, target, dt) => { s.v += (-s.k * (s.x - target) - s.d * s.v) * dt; s.x += s.v * dt; };
+let last = performance.now(), nextBlink = 1.5, blink = 0;
 
-  const step = (s, target, dt) => { s.v += (-s.k * (s.x - target) - s.d * s.v) * dt; s.x += s.v * dt; };
+function poke() { if (hop.y > -2) hop.v = -480; wob.v += (Math.random() < 0.5 ? -1 : 1) * 60; }
+host.addEventListener("pointerdown", poke);
+host.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); poke(); } });
 
-  function poke() {
-    if (hop.y > -1) hop.v = -520;
-    tilt.v += (Math.random() - 0.5) * 30;
-  }
-  host.addEventListener("pointerdown", poke);
-  host.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); poke(); } });
-
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function frame(now) {
-    const dt = Math.min((now - last) / 1000, 1 / 30); last = now;
-    hop.v += 1800 * dt; hop.y += hop.v * dt;
-    if (hop.y > 0) { hop.y = 0; if (hop.v > 200) { hat.v += hop.v * 0.9; ant.v += hop.v * 1.2; } hop.v = 0; }
-    step(hat, hop.y, dt); step(ant, hop.y, dt); step(tilt, 0, dt);
-
-    for (const n of body) n.setAttribute("transform", `translate(0 ${hop.y.toFixed(2)})`);
-    parts.hat.setAttribute("transform", `translate(0 ${hat.x.toFixed(2)}) rotate(${tilt.x.toFixed(2)} 256 190)`);
-    const sway = (ant.x - hop.y) * 0.25;
-    parts.ant.setAttribute("transform", `translate(0 ${ant.x.toFixed(2)}) rotate(${(tilt.x * 1.6 + sway * 0.2).toFixed(2)} 256 150)`);
-
-    nextBlink -= dt;
-    if (nextBlink < 0) { blink = 0.14; nextBlink = 2 + Math.random() * 3; }
-    blink = Math.max(0, blink - dt);
-    const sy = blink > 0 ? 0.2 : 1;
-    parts.pupils.forEach(p => p.setAttribute("transform", `translate(0 ${hop.y.toFixed(2)}) translate(0 262) scale(1 ${sy}) translate(0 -262)`));
-    if (!still) requestAnimationFrame(frame);
-  }
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 1 / 30); last = now;
+  hop.v += 1700 * dt; hop.y += hop.v * dt;
+  if (hop.y > 0) { if (hop.v > 150) { hat.v += hop.v * 0.8; wob.v += hop.v * 0.08; } hop.y = 0; hop.v = 0; }
+  spring(hat, hop.y, dt); spring(wob, 0, dt);
+  head.setAttribute("transform", `translate(0 ${hop.y.toFixed(2)})`);
+  body.setAttribute("transform", `translate(0 ${(hop.y * 0.55).toFixed(2)})`);
+  hatRig.setAttribute("transform", `translate(0 ${hat.x.toFixed(2)}) ${hatBase}`);
+  ant.setAttribute("transform", `rotate(${wob.x.toFixed(2)} 256 110)`);
+  nextBlink -= dt;
+  if (nextBlink < 0) { blink = 0.13; nextBlink = 2 + Math.random() * 3; }
+  blink = Math.max(0, blink - dt);
+  pupils.forEach(p => p.setAttribute("transform", blink > 0 ? "translate(0 276) scale(1 .25) translate(0 -276)" : ""));
   requestAnimationFrame(frame);
-});
+}
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(frame);
 </script>
 </body>
 </html>
