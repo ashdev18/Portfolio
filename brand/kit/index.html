@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ash Dev Brand Kit</title>
+  <meta name="description" content="Logos, colours, type, emotions and motion for the Ash Dev brand.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Gabarito:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="kit.css">
+</head>
+<body>
+  <div class="kit" id="kit">
+    <header class="top">
+      <div class="top-in">
+        <div class="title">
+          <span class="eyebrow">Ash Dev · brand kit · v0.1</span>
+          <h1>Two marks in review</h1>
+          <p>Sprout Studio and Peek share everything except the mark and the type. Pick one, pick a palette, and every section below follows.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Mark">
+            <button type="button" id="fam-studio" data-fam="studio">Sprout Studio</button>
+            <button type="button" id="fam-peek" data-fam="peek">Peek</button>
+          </div>
+          <div class="pals" id="pals" role="group" aria-label="Palette"></div>
+          <p class="pal-note" id="palNote"></p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="logo">
+        <div class="sec-head"><span class="n">01</span><h2>Logo</h2><p>The horizontal logo is the default. Use the stacked one where width is tight, and the mark alone where the name is already shown nearby.</p></div>
+        <div class="hero-logo plate"><img id="logoMain" alt="Ash Dev logo"></div>
+        <div class="variants" id="variants"></div>
+      </section>
+
+      <section id="space">
+        <div class="sec-head"><span class="n">02</span><h2>Space and size</h2><p>Keep clear space of one antenna height (a quarter of the mark) on every side. Below 24 px use the mark alone.</p></div>
+        <div class="space-grid">
+          <figure class="card clear"><div class="clear-box"><div class="cb-mark" id="clearMark"></div></div><figcaption>Clear space: ¼ of the mark's height</figcaption></figure>
+          <figure class="card sizes"><div class="size-row" id="sizes"></div><figcaption>Smallest sizes: 16 px for favicons, 96 px wide for the full logo</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="colour">
+        <div class="sec-head"><span class="n">03</span><h2>Colour</h2><p>Every palette has the same roles, so swapping palettes never breaks a layout. Contrast ratios are checked against WCAG 2.</p></div>
+        <div class="swatches" id="swatches"></div>
+        <div class="card contrast" id="contrast"></div>
+      </section>
+
+      <section id="type">
+        <div class="sec-head"><span class="n">04</span><h2>Type</h2><p>One display face for headings and the wordmark, one text face, and a mono for labels, versions and code.</p></div>
+        <div class="type-grid" id="typeGrid"></div>
+      </section>
+
+      <section id="emotions">
+        <div class="sec-head"><span class="n">05</span><h2>Emotions</h2><p>The antennae and eyes do the acting. Each emotion has a job, so the character always means something when it appears.</p></div>
+        <div class="emo-grid" id="emoGrid"></div>
+      </section>
+
+      <section id="motion">
+        <div class="sec-head"><span class="n">06</span><h2>Motion</h2><p>Things land, squash a little and settle, the way a good jump feels. Nothing slides in flat.</p></div>
+        <div class="motion-grid">
+          <div class="card intro"><span class="lab">Logo intro</span><button type="button" class="replay" id="replay">Replay</button><div class="intro-stage" id="introStage"></div></div>
+          <div class="card tokens" id="tokens"></div>
+        </div>
+      </section>
+
+      <section id="use">
+        <div class="sec-head"><span class="n">07</span><h2>In use</h2><p>The same parts on the places people actually meet you.</p></div>
+        <div class="use-grid">
+          <figure class="card web"><div class="web-nav"><div class="wn-logo"><span id="webMark"></span><b>ashdev</b></div><span>Work</span><span>Tools</span><span>Game</span><span class="wn-cta">Contact</span></div>
+            <div class="web-hero"><div><h3 id="webHead">Mechanics that feel good to play.</h3><p>Vehicle physics, AI drivers and game-feel tools for Unity. Now making Poetry of Pace: Rally.</p><div class="web-btns"><span class="b1">View work</span><span class="b2">Wishlist the game</span></div></div><div class="web-pic"><div class="web-badge" id="webBadge"></div></div></div>
+            <figcaption>Website header</figcaption></figure>
+          <figure class="card yt"><img id="ytImg" alt="YouTube banner"><figcaption>YouTube banner, 2560 × 1440 (logo inside the 1546 × 423 safe area)</figcaption></figure>
+          <figure class="card ka"><div class="ka-art"><div class="ka-pic"></div><div class="ka-text"><small>Unity · Behaviour AI</small><b>Omni Vehicle AI</b></div><div class="ka-mark" id="kaMark"></div></div><figcaption>Asset Store key art, 1950 × 1300</figcaption></figure>
+          <figure class="card avatars"><div class="av-row" id="avatars"></div><figcaption>Avatars are cropped to circles, so the mark sits inside one</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="donts">
+        <div class="sec-head"><span class="n">08</span><h2>Please don't</h2><p>The mark only works if it always looks like itself.</p></div>
+        <div class="dont-grid" id="donts-grid"></div>
+      </section>
+
+      <section id="files">
+        <div class="sec-head"><span class="n">09</span><h2>Files</h2><p>Everything is generated from <code>marks.js</code> by <code>export.js</code>, so a change to the drawing or a palette updates every file at once.</p></div>
+        <div class="card files" id="fileList"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="marks.js"></script>
+  <script src="kit.js"></script>
+</body>
+</html>

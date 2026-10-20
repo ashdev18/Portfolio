@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="live s-focused" role="img" aria-label="Ash Dev, focused"><style>.f-tile{fill:#A9D86A}.f-main{fill:#13291B}.f-maind{fill:#0B1A10}.f-body{fill:#FFFFFF}.f-shade{fill:#DCE8CF}.f-ink{fill:#13291B}.f-white{fill:#FFFFFF}.f-spot{fill:#FFFFFF}.f-fx{fill:#3E8A52}.f-line{fill:#17201A}.s-main{stroke:#13291B}.s-maind{stroke:#0B1A10}.s-ink{stroke:#13291B}.s-line{stroke:#17201A}.s-white{stroke:#FFFFFF}.nf{fill:none}
+.ant,.chr,.hatg,.head{transform-box:view-box}.eyes{transform-box:fill-box;transform-origin:center}
+.live .chr{animation:ad-bob 3.2s ease-in-out infinite;transform-origin:50px 90px}
+.live .eyes{animation:ad-blink 4.6s infinite}
+.live .ant{animation:ad-sway 3.2s ease-in-out infinite}.live .antR{animation-delay:-.4s}
+@keyframes ad-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.6px)}}
+@keyframes ad-blink{0%,93%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes ad-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.live.s-happy .chr{animation:ad-hop 1.3s cubic-bezier(.3,0,.3,1) infinite}
+.live.s-happy .ant{animation:ad-flick 1.3s ease-out infinite}
+.live.s-happy .spark{animation:ad-twinkle 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.live.s-happy .spark2{animation-delay:-.6s}
+@keyframes ad-hop{0%,100%{transform:translateY(0) scale(1,1)}12%{transform:translateY(0) scale(1.06,.92)}40%{transform:translateY(-9px) scale(.97,1.04)}70%{transform:translateY(0) scale(1.04,.95)}82%{transform:translateY(0) scale(1,1)}}
+@keyframes ad-flick{0%,30%,100%{transform:rotate(0)}50%{transform:rotate(-10deg)}75%{transform:rotate(6deg)}}
+@keyframes ad-twinkle{0%,100%{transform:scale(.4);opacity:.4}50%{transform:scale(1);opacity:1}}
+.live.s-surprised .hatg{animation:ad-pop 2.4s cubic-bezier(.2,.9,.3,1.4) infinite;transform-origin:50px 45px}
+.live.s-surprised .ant{animation:ad-buzz .12s linear infinite}
+.live.s-surprised .chr{animation:ad-jolt 2.4s ease-out infinite}
+@keyframes ad-pop{0%,100%{transform:translateY(0)}8%{transform:translateY(-9px) rotate(-4deg)}30%{transform:translateY(-3px)}60%{transform:translateY(0)}}
+@keyframes ad-buzz{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+@keyframes ad-jolt{0%,100%{transform:translateY(0)}6%{transform:translateY(-4px)}20%{transform:translateY(0)}}
+.live.s-sleepy .chr{animation:ad-breathe 4.2s ease-in-out infinite}.live.s-sleepy .eyes{animation:none}
+.live.s-sleepy .ant{animation:ad-droop 4.2s ease-in-out infinite}
+.live.s-sleepy .z{animation:ad-zz 3s ease-out infinite;opacity:0;transform-box:fill-box}.live.s-sleepy .z2{animation-delay:1.5s}
+@keyframes ad-breathe{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(1px) scale(1.02,.98)}}
+@keyframes ad-droop{0%,100%{transform:rotate(0)}50%{transform:rotate(5deg)}}
+@keyframes ad-zz{0%{opacity:0;transform:translate(0,4px) scale(.7)}25%{opacity:1}100%{opacity:0;transform:translate(6px,-12px) scale(1.1)}}
+.live.s-focused .chr{animation:ad-lean 2.6s ease-in-out infinite}
+.live.s-focused .ant{animation:ad-twitch 2.6s ease-in-out infinite}
+.live.s-focused .eyes{animation:ad-scan 2.6s ease-in-out infinite}
+@keyframes ad-lean{0%,100%{transform:rotate(0)}50%{transform:rotate(-2.5deg)}}
+@keyframes ad-twitch{0%,70%,100%{transform:rotate(0)}78%{transform:rotate(-6deg)}86%{transform:rotate(2deg)}}
+@keyframes ad-scan{0%,100%{transform:translateX(0)}40%,60%{transform:translateX(2px)}}
+.live.s-oops .chr{animation:ad-shake 2.6s ease-in-out infinite}
+.live.s-oops .drop{animation:ad-drip 2.6s ease-in infinite;transform-box:fill-box}
+@keyframes ad-shake{0%,60%,100%{transform:translateX(0) rotate(0)}64%{transform:translateX(-2px) rotate(-3deg)}68%{transform:translateX(2px) rotate(3deg)}72%{transform:translateX(-1.5px) rotate(-2deg)}76%{transform:translateX(1px)}}
+@keyframes ad-drip{0%,20%{transform:translateY(0);opacity:0}30%{opacity:1}90%{transform:translateY(10px);opacity:1}100%{transform:translateY(12px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.live *{animation:none!important}}</style>
+  <rect class="tile f-tile" width="100" height="100" rx="24"/>
+  <g class="chr"><g transform="rotate(-4 50 82)">
+    <g transform="translate(0 0)"><g transform="rotate(16 40 30)"><g class="ant antL" style="transform-origin:40px 30px"><path class="s-main" d="M40 30 L35 16" stroke-width="5" stroke-linecap="round"/><circle class="f-main" cx="35" cy="15" r="4.5"/></g></g><g transform="rotate(-16 60 30)"><g class="ant antR" style="transform-origin:60px 30px"><path class="s-main" d="M60 30 L65 16" stroke-width="5" stroke-linecap="round"/><circle class="f-main" cx="65" cy="15" r="4.5"/></g></g></g>
+    <g class="head"><rect class="f-body" x="26" y="40" width="48" height="42" rx="11"/><path class="f-shade" d="M30 40 H70 V48 Q50 54 30 48 Z"/><g transform="translate(50 61) scale(1)"><g class="eyes"><path class="s-ink" d="M-16 -5 L-4 -2 M4 -2 L16 -5" stroke-width="3.2" stroke-linecap="round"/><circle class="f-ink" cx="-8.5" cy="2" r="2.6"/><circle class="f-ink" cx="10.5" cy="2" r="2.6"/></g><path class="s-ink" d="M-5 10.5 L5 9.5" stroke-width="2.6" stroke-linecap="round"/></g></g>
+    <g transform="translate(0 0)"><g class="hatg"><path class="f-main" d="M12 41 Q50 16 88 41 Q50 50 12 41 Z"/><path class="f-maind" d="M20 42.5 Q50 49 80 42.5 Q50 46.5 20 42.5 Z"/></g></g>
+  </g></g>
+  <g class="fx"></g>
+</svg>

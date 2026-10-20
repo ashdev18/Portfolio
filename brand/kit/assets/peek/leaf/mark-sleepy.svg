@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="s-sleepy" role="img" aria-label="Ash Dev, sleepy"><style>.f-tile{fill:transparent}.f-main{fill:#B4E05F}.f-maind{fill:#8CBF3A}.f-body{fill:#FFFFFF}.f-shade{fill:#DDDDDD}.f-ink{fill:#17201A}.f-white{fill:#FFFFFF}.f-spot{fill:#CFEE8F}.f-fx{fill:#5BB8FF}.f-line{fill:#17201A}.s-main{stroke:#B4E05F}.s-maind{stroke:#8CBF3A}.s-ink{stroke:#17201A}.s-line{stroke:#17201A}.s-white{stroke:#FFFFFF}.nf{fill:none}</style>
+  <g class="chr"><g transform="rotate(0 50 60)">
+    <path class="f-ink" d="M17 54 Q50 48 83 54 Q80 77 50 78 Q20 77 17 54 Z"/>
+    <g class="eyes"><path class="s-white nf" d="M32 65 Q39 69 46 65 M54 65 Q61 69 68 65" stroke-width="3.2" stroke-linecap="round"/></g>
+    <g transform="translate(0 3)"><g class="hatg">
+      <g transform="rotate(-60 40 38)"><g class="ant antL" style="transform-origin:40px 38px"><path class="s-line nf" d="M40 38 Q39 22 30 12" stroke-width="3.6" stroke-linecap="round"/><circle class="f-main s-line" cx="30" cy="11" r="5" stroke-width="3"/></g></g><g transform="rotate(60 60 38)"><g class="ant antR" style="transform-origin:60px 38px"><path class="s-line nf" d="M60 38 Q61 22 70 12" stroke-width="3.6" stroke-linecap="round"/><circle class="f-main s-line" cx="70" cy="11" r="5" stroke-width="3"/></g></g>
+      <path class="f-main s-line" d="M6 56 Q8 40 30 34 Q50 28 70 34 Q92 40 94 56 Q94 60 88 59 Q70 54 50 54 Q30 54 12 59 Q6 60 6 56 Z" stroke-width="3.4" stroke-linejoin="round"/>
+      <path class="s-maind nf" d="M14 56 Q32 51 50 51 Q68 51 86 56" stroke-width="3" stroke-linecap="round"/>
+      <ellipse class="f-spot" cx="34" cy="42" rx="5" ry="3"/><circle class="f-spot" cx="62" cy="38" r="2.4"/><circle class="f-spot" cx="74" cy="45" r="3"/>
+    </g></g>
+  </g></g>
+  <g class="fx"><path class="z  s-line nf" d="M78 26 h4.8 l-4.8 4.8 h4.8" stroke-width="1.92" stroke-linecap="round" stroke-linejoin="round"/><path class="z z2 s-line nf" d="M86 17 h3.6 l-3.6 3.6 h3.6" stroke-width="1.4400000000000002" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg>

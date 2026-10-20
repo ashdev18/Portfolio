@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="s-happy" role="img" aria-label="Ash Dev, happy"><style>.f-tile{fill:transparent}.f-main{fill:#B4E05F}.f-maind{fill:#8CBF3A}.f-body{fill:#FFFFFF}.f-shade{fill:#DDDDDD}.f-ink{fill:#070908}.f-white{fill:#FFFFFF}.f-spot{fill:#CFEE8F}.f-fx{fill:#5BB8FF}.f-line{fill:#EEF2EA}.s-main{stroke:#B4E05F}.s-maind{stroke:#8CBF3A}.s-ink{stroke:#070908}.s-line{stroke:#EEF2EA}.s-white{stroke:#FFFFFF}.nf{fill:none}</style>
+  <g class="chr"><g transform="rotate(0 50 60)">
+    <path class="f-ink" d="M17 54 Q50 48 83 54 Q80 77 50 78 Q20 77 17 54 Z"/>
+    <g class="eyes"><path class="s-white nf" d="M32 67 Q39 59 46 67 M54 67 Q61 59 68 67" stroke-width="3.6" stroke-linecap="round"/></g>
+    <g transform="translate(0 0)"><g class="hatg">
+      <g transform="rotate(-16 40 38)"><g class="ant antL" style="transform-origin:40px 38px"><path class="s-line nf" d="M40 38 Q39 22 30 12" stroke-width="3.6" stroke-linecap="round"/><circle class="f-main s-line" cx="30" cy="11" r="5" stroke-width="3"/></g></g><g transform="rotate(16 60 38)"><g class="ant antR" style="transform-origin:60px 38px"><path class="s-line nf" d="M60 38 Q61 22 70 12" stroke-width="3.6" stroke-linecap="round"/><circle class="f-main s-line" cx="70" cy="11" r="5" stroke-width="3"/></g></g>
+      <path class="f-main s-line" d="M6 56 Q8 40 30 34 Q50 28 70 34 Q92 40 94 56 Q94 60 88 59 Q70 54 50 54 Q30 54 12 59 Q6 60 6 56 Z" stroke-width="3.4" stroke-linejoin="round"/>
+      <path class="s-maind nf" d="M14 56 Q32 51 50 51 Q68 51 86 56" stroke-width="3" stroke-linecap="round"/>
+      <ellipse class="f-spot" cx="34" cy="42" rx="5" ry="3"/><circle class="f-spot" cx="62" cy="38" r="2.4"/><circle class="f-spot" cx="74" cy="45" r="3"/>
+    </g></g>
+  </g></g>
+  <g class="fx"><path class="spark f-main" d="M10 72 l2 -6 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 z"/><path class="spark spark2 f-fx" d="M86 72 l1.4 -4 l1.4 4 l4 1.4 l-4 1.4 l-1.4 4 l-1.4 -4 l-4 -1.4 z"/></g>
+</svg>
