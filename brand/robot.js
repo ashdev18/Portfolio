@@ -1,12 +1,13 @@
 // Draws the Ash Dev sprout robot as an SVG string, following the proportions of the original logo.
 // Options: style ("soft" | "sticker" | "mark"), mood ("deadpan" | "happy" | "surprised" | "sleepy").
-window.robot = function robot({ style = "soft", mood = "deadpan", ring = true } = {}) {
+window.robot = function robot({ style = "soft", mood = "deadpan", ring = true, colors = {}, shadow = "soft", viewBox = null } = {}) {
   const sticker = style === "sticker", mark = style === "mark";
   const P = {
     ink: "#27302B", body: "#F5F6F2", shade: "#DCE0D7", deep: "#C3C9BD", seam: "#B9BFB3", slot: "#3A443D",
     hat: "#2F6E40", hatHi: "#3E8A52", hatUnder: "#1B4428", lime: "#9FD65B", limeHi: "#C9EE90",
-    bgIn: "#D2F59A", bgOut: "#A6D466", drop: "#6E9F3C"
+    bgIn: "#D2F59A", bgOut: "#A6D466", drop: "#6E9F3C", eye: "#FFFFFF", ring: "#FFFFFF"
   };
+  Object.assign(P, colors);
   const lw = sticker ? 8 : mark ? 7 : 3.6;
   const ol = (w = lw) => `stroke="${P.ink}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"`;
   const tilt = sticker ? 5 : 0;
@@ -15,7 +16,7 @@ window.robot = function robot({ style = "soft", mood = "deadpan", ring = true } 
 
   // ---- face ----------------------------------------------------------------
   const eye = (cx, cy) => {
-    const ring = `<circle cx="${cx}" cy="${cy}" r="17" fill="#FFFFFF" ${ol(lw * 0.85)}/>`;
+    const ring = `<circle cx="${cx}" cy="${cy}" r="17" fill="${P.eye}" ${ol(lw * 0.85)}/>`;
     switch (mood) {
       case "happy":
         return ring + `<path d="M${cx - 9} ${cy + 3} Q${cx} ${cy - 8} ${cx + 9} ${cy + 3}" fill="none" stroke="${P.ink}" stroke-width="4.5" stroke-linecap="round"/>`;
@@ -114,19 +115,19 @@ window.robot = function robot({ style = "soft", mood = "deadpan", ring = true } 
     turn(head + `<g transform="translate(0 ${hatLift}) rotate(${hatTilt} 256 170)">${hat}${antennae}</g>`, tilt, 256, 400);
   const defs = `<defs>
       <filter id="${id}s" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="${mark ? 6 : 14}" dy="${mark ? 4 : 8}" stdDeviation="${mark ? 4 : 9}" flood-color="${P.drop}" flood-opacity=".7"/>
+        ${shadow === "hard" ? `<feDropShadow dx="${mark ? 8 : 12}" dy="${mark ? 8 : 12}" stdDeviation="0" flood-color="${P.ink}" flood-opacity="1"/>` : shadow === "none" ? "" : `<feDropShadow dx="${mark ? 6 : 14}" dy="${mark ? 4 : 8}" stdDeviation="${mark ? 4 : 9}" flood-color="${P.drop}" flood-opacity=".7"/>`}
       </filter>
       <radialGradient id="${id}g" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="${P.bgIn}"/><stop offset="1" stop-color="${P.bgOut}"/></radialGradient>
       <clipPath id="${id}c"><circle cx="256" cy="256" r="236"/></clipPath>
     </defs>`;
 
   if (mark) {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="76 26 360 360" role="img" aria-label="Ash Dev sprout robot">${defs}
-      <g filter="url(#${id}s)">${character}</g></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox || "76 26 360 360"}" role="img" aria-label="Ash Dev sprout robot">${defs}
+      <g ${shadow === "none" ? "" : `filter="url(#${id}s)"`}>${character}</g></svg>`;
   }
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ash Dev sprout robot, ${mood}">${defs}
     ${ring ? `<circle cx="256" cy="256" r="236" fill="url(#${id}g)"/>` : ""}
-    <g ${ring ? `clip-path="url(#${id}c)"` : ""}><g filter="url(#${id}s)" transform="translate(256 256) scale(1.02) translate(-256 -244)">${character}</g></g>
-    ${ring ? `<circle cx="256" cy="256" r="241" fill="none" stroke="#FFFFFF" stroke-width="14"/>` : ""}
+    <g ${ring ? `clip-path="url(#${id}c)"` : ""}><g ${shadow === "none" ? "" : `filter="url(#${id}s)"`} transform="translate(256 256) scale(1.02) translate(-256 -244)">${character}</g></g>
+    ${ring ? `<circle cx="256" cy="256" r="241" fill="none" stroke="${P.ring}" stroke-width="14"/>` : ""}
   </svg>`;
 };

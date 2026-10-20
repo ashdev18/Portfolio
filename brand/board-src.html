@@ -1,0 +1,457 @@
+<title>Ash Dev Brand Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Rubik:wght@400;500;700&family=Titan+One&family=Nunito:wght@400;700;800&family=Unbounded:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one board, three switchable directions. Each direction owns every token below. */
+:root {
+  --bg: #EEF2E6; --surface: #F9FBF4; --ink: #233026; --muted: #5E6B5F;
+  --brand: #A9D86A; --deep: #2F6E40; --accent: #FF7A3D; --on-deep: #F4F7EE;
+  --line: 3px; --radius: 22px; --shadow: 0 16px 30px -16px rgba(47, 110, 64, .55);
+  --display: "Lilita One", "Arial Rounded MT Bold", sans-serif;
+  --body: "Rubik", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --display-case: none; --display-track: .005em;
+  --grid: none;
+}
+.board[data-dir="toybox"] {
+  --bg: #E5F5C4; --surface: #FFFFFF; --ink: #1B2A1F; --muted: #4F5E50;
+  --brand: #8CCB2E; --deep: #1E5E35; --accent: #FF5FA2; --on-deep: #FFFFFF;
+  --line: 4px; --radius: 14px; --shadow: 6px 6px 0 var(--ink);
+  --display: "Titan One", "Arial Black", sans-serif;
+  --body: "Nunito", system-ui, sans-serif;
+  --display-track: .01em;
+}
+.board[data-dir="workbench"] {
+  --bg: #121713; --surface: #1B221C; --ink: #E7ECE0; --muted: #8E9A8B;
+  --brand: #B6E36A; --deep: #24402B; --accent: #FF7A3D; --on-deep: #E7ECE0;
+  --line: 1.5px; --radius: 6px; --shadow: 0 0 0 1px #2E392F;
+  --display: "Unbounded", "Arial", sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --display-track: -.01em;
+  --grid: linear-gradient(rgba(182, 227, 106, .06) 1px, transparent 1px) 0 0 / 24px 24px,
+          linear-gradient(90deg, rgba(182, 227, 106, .06) 1px, transparent 1px) 0 0 / 24px 24px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; }
+.board {
+  min-height: 100vh; background: var(--grid), var(--bg); color: var(--ink);
+  font: 400 16px/1.5 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 56px;
+  transition: background-color .35s, color .35s;
+}
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* Top bar */
+.top { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.label { font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.switch { display: flex; flex-wrap: wrap; gap: 8px; }
+.switch button {
+  border: var(--line) solid var(--ink); background: var(--surface); border-radius: 999px;
+  padding: 8px 16px; cursor: pointer; font-weight: 700; font-size: 15px;
+}
+.switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.switch small { font-weight: 400; opacity: .7; margin-left: 4px; }
+
+/* Panels */
+.panel {
+  background: var(--surface); border: var(--line) solid var(--ink); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: clamp(16px, 3vw, 28px); min-width: 0;
+}
+.panel h2 { margin: 0 0 16px; font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; align-items: center; }
+.stage { display: grid; place-items: center; cursor: pointer; touch-action: manipulation; }
+.stage svg, .tile svg, .mock svg { display: block; width: 100%; height: auto; overflow: visible; }
+#heroBot { width: min(100%, 360px); }
+.wordmark {
+  font: 400 clamp(64px, 11vw, 136px)/.95 var(--display); letter-spacing: var(--display-track);
+  margin: 0 0 18px; white-space: nowrap; color: var(--ink);
+}
+.wm-a { position: relative; display: inline-block; }
+.wm-hat { position: absolute; left: 50%; bottom: 62%; width: 1.25em; transform: translateX(-50%); pointer-events: none; }
+.board[data-dir="workbench"] .wordmark { font-weight: 700; font-size: clamp(48px, 8.4vw, 104px); }
+.thesis { font: 400 clamp(22px, 2.6vw, 30px)/1.15 var(--display); margin: 0 0 10px; text-wrap: balance; }
+.board[data-dir="workbench"] .thesis { font-weight: 500; }
+.feel { margin: 0 0 6px; color: var(--muted); max-width: 46ch; }
+.best { margin: 0; font-size: 14px; }
+.best b { color: var(--deep); }
+.board[data-dir="workbench"] .best b { color: var(--brand); }
+
+/* Palette */
+.swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.sw { display: grid; gap: 8px; }
+.sw i { display: block; aspect-ratio: 1 / 1; max-width: 100%; border-radius: calc(var(--radius) * .6); border: var(--line) solid var(--ink); }
+.sw b { font-size: 14px; }
+.sw code { font: 400 12px/1 var(--mono); color: var(--muted); }
+
+/* Type */
+.type-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px; align-items: end; }
+.specimen { font: 400 clamp(34px, 5vw, 60px)/1 var(--display); margin: 0; text-wrap: balance; letter-spacing: var(--display-track); }
+.board[data-dir="workbench"] .specimen { font-weight: 700; }
+.type-notes { display: grid; gap: 10px; font-size: 14px; color: var(--muted); }
+.type-notes b { color: var(--ink); display: block; font-size: 16px; }
+
+/* Motion lab */
+.motion { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.tile {
+  position: relative; display: grid; grid-template-rows: 1fr auto; gap: 10px; min-height: 230px;
+  border: var(--line) solid var(--ink); border-radius: calc(var(--radius) * .75); background: var(--bg);
+  padding: 14px; overflow: hidden; touch-action: none; user-select: none;
+}
+.tile .zone { display: grid; place-items: center; min-height: 160px; }
+.tile p { margin: 0; font-size: 14px; }
+.tile p b { display: block; font-size: 16px; }
+.tile p span { color: var(--muted); }
+#pokeBot { width: 150px; cursor: pointer; }
+#dragHead { width: 120px; cursor: grab; will-change: transform; }
+#dragHead:active { cursor: grabbing; }
+.press {
+  border: var(--line) solid var(--ink); background: var(--accent); color: #1B1B1B;
+  font: 400 22px/1 var(--display); padding: 18px 28px; border-radius: 999px; cursor: pointer;
+  box-shadow: var(--shadow); will-change: transform;
+}
+.board[data-dir="workbench"] .press { font-weight: 700; font-size: 16px; border-radius: var(--radius); }
+.board[data-dir="toybox"] .press { border-radius: var(--radius); }
+#waitBot { width: 120px; }
+#waitBot .hat-rig { animation: bob 1.4s cubic-bezier(.3, 0, .2, 1) infinite; transform-box: view-box; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  18% { transform: translateY(6px) scaleY(.96); }
+  45% { transform: translateY(-30px); }
+  70% { transform: translateY(2px); }
+  82% { transform: translateY(-4px); }
+}
+.dots { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
+.dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--deep); animation: dot 1.4s infinite; }
+.dots i:nth-child(2) { animation-delay: .15s; } .dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+.board[data-dir="workbench"] .dots i { background: var(--brand); }
+
+/* In use */
+.inuse { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.mock { display: grid; gap: 8px; min-width: 0; }
+.mock figcaption { font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+.asset {
+  position: relative; aspect-ratio: 3 / 2; max-width: 100%; overflow: hidden; border-radius: calc(var(--radius) * .6);
+  background: var(--deep); color: var(--on-deep); border: var(--line) solid var(--ink);
+  display: grid; grid-template-columns: 1.15fr 1fr;
+}
+.asset .shot { background: center / cover no-repeat; border-right: var(--line) solid var(--ink); }
+.board[data-dir="sprout"] .asset .shot { border-radius: 0 50% 50% 0 / 0 60% 60% 0; border-right-width: 0; }
+.asset .copy { display: grid; align-content: center; gap: 10px; padding: 7% 8% 7% 9%; }
+.asset .chip { justify-self: start; font: 700 clamp(9px, 1.1vw, 12px)/1 var(--body); letter-spacing: .08em; text-transform: uppercase; background: var(--brand); color: #1B2A1F; padding: 6px 10px; border-radius: 999px; }
+.asset h3 { margin: 0; font: 400 clamp(20px, 3vw, 34px)/.95 var(--display); text-wrap: balance; }
+.board[data-dir="workbench"] .asset h3 { font-weight: 700; font-size: clamp(16px, 2.2vw, 26px); }
+.asset .badge { position: absolute; right: 4%; bottom: 5%; width: 18%; }
+.board[data-dir="workbench"] .asset { background: var(--grid), var(--surface); }
+
+.yt { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; border-radius: calc(var(--radius) * .6); border: var(--line) solid var(--ink); background: center / cover no-repeat; }
+.yt h3 {
+  position: absolute; left: 5%; top: 8%; width: 62%; margin: 0;
+  font: 400 clamp(24px, 4.2vw, 50px)/.92 var(--display); color: #FFFFFF; text-transform: uppercase;
+  -webkit-text-stroke: clamp(1px, .3vw, 3px) #1B2A1F; paint-order: stroke fill; text-shadow: 0 4px 0 #1B2A1F;
+}
+.yt h3 em { font-style: normal; color: var(--brand); }
+.board[data-dir="workbench"] .yt h3 { font-weight: 700; font-size: clamp(18px, 3vw, 36px); text-transform: none; -webkit-text-stroke: 0; text-shadow: none; background: rgba(18, 23, 19, .85); padding: 10px 14px; border-left: 4px solid var(--brand); }
+.yt .bot { position: absolute; right: -2%; bottom: -14%; width: 44%; }
+
+.row3 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.avatars { display: flex; gap: 16px; align-items: end; flex-wrap: wrap; }
+.avatars .icon { display: grid; place-items: center; background: var(--brand); border: var(--line) solid var(--ink); border-radius: 26%; }
+.moods { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.moods div { display: grid; gap: 6px; justify-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+
+.foot { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .motion { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inuse, .row3 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .hero, .type-grid { grid-template-columns: minmax(0, 1fr); }
+  .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wordmark { font-size: clamp(56px, 18vw, 96px); }
+}
+@media (max-width: 420px) {
+  .motion { grid-template-columns: minmax(0, 1fr); }
+  .moods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #waitBot .hat-rig, .dots i { animation: none; }
+}
+</style>
+
+<div class="board" id="board" data-dir="sprout">
+  <div class="wrap">
+    <header class="top">
+      <span class="label">Ash Dev · brand directions</span>
+      <div class="switch" role="group" aria-label="Brand direction">
+        <button type="button" id="d-sprout" data-dir="sprout" aria-pressed="true">Sprout <small>recommended</small></button>
+        <button type="button" id="d-toybox" data-dir="toybox" aria-pressed="false">Toybox</button>
+        <button type="button" id="d-workbench" data-dir="workbench" aria-pressed="false">Workbench</button>
+      </div>
+    </header>
+
+    <section class="panel hero" aria-label="Logo">
+      <div class="stage" id="heroStage" role="button" tabindex="0" aria-label="Poke the mascot">
+        <div id="heroBot"></div>
+      </div>
+      <div>
+        <p class="wordmark" id="wordmark" aria-label="ash dev"><span class="wm-a">a<span class="wm-hat" id="wmHat"></span></span>sh dev</p>
+        <p class="thesis">Mechanics that feel good to play.</p>
+        <p class="feel" id="feel"></p>
+        <p class="best" id="best"></p>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Colour">
+      <h2>Colour</h2>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section class="panel" aria-label="Type">
+      <h2>Type</h2>
+      <div class="type-grid">
+        <p class="specimen">Drift, hop, swing, land. Make it feel right.</p>
+        <div class="type-notes" id="typeNotes"></div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Motion">
+      <h2>Motion · try each one</h2>
+      <div class="motion">
+        <div class="tile">
+          <div class="zone"><div id="pokeBot" role="button" tabindex="0" aria-label="Poke"></div></div>
+          <p><b>Poke</b><span>Tap him. The hat lags behind.</span></p>
+        </div>
+        <div class="tile">
+          <div class="zone"><button type="button" class="press" id="pressBtn">Play demo</button></div>
+          <p><b>Press</b><span>Buttons squash and spring back.</span></p>
+        </div>
+        <div class="tile" id="dragTile">
+          <div class="zone"><div id="dragHead" aria-label="Drag the head"></div></div>
+          <p><b>Drag</b><span>Grab him, throw him, he wobbles home.</span></p>
+        </div>
+        <div class="tile">
+          <div class="zone"><div><div id="waitBot"></div><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
+          <p><b>Wait</b><span>Loading, without a spinner.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="inuse" aria-label="In use">
+      <figure class="mock panel" style="margin:0">
+        <h2>Asset Store tile</h2>
+        <div class="asset">
+          <div class="shot" style="background-image:url(%%DRIFT%%)"></div>
+          <div class="copy"><span class="chip">Physics</span><h3>Sim-Cade Vehicle Physics</h3></div>
+          <div class="badge" id="assetBadge"></div>
+        </div>
+      </figure>
+      <figure class="mock panel" style="margin:0">
+        <h2>YouTube thumbnail</h2>
+        <div class="yt" style="background-image:url(%%RED%%)">
+          <h3>Why games <em>fake</em> physics</h3>
+          <div class="bot" id="ytBot"></div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="row3">
+      <div class="panel">
+        <h2>Avatar and icon</h2>
+        <div class="avatars" id="avatars"></div>
+      </div>
+      <div class="panel">
+        <h2>Moods · tap to swap the hero</h2>
+        <div class="moods" id="moods"></div>
+      </div>
+    </section>
+
+    <p class="foot">Mascot drawings are explorations to brief an illustrator from, not final art. Game frames are from Poetry of Pace: Rally, used as placeholders.</p>
+  </div>
+</div>
+
+<script>
+/*%%ROBOT%%*/
+</script>
+<script>
+(() => {
+  const DIRS = {
+    sprout: {
+      feel: "Your current world, grown up. Soft shapes, thick friendly outlines, and everything moves on a spring.",
+      best: "<b>Best for</b> the main brand: website, YouTube, Asset Store.",
+      swatches: [["Leaf lime", "#A9D86A"], ["Moss", "#2F6E40"], ["Bone", "#F9FBF4"], ["Graphite", "#233026"], ["Spark orange", "#FF7A3D"]],
+      type: [["Lilita One", "Headings. Chunky and round, like a controller button."], ["Rubik", "Text. Soft corners that match the shapes."]],
+      bot: {}, shadow: "soft"
+    },
+    toybox: {
+      feel: "Louder and more playful. Flat colour, hard sticker shadows, a bit of watermelon pink.",
+      best: "<b>Best for</b> YouTube and social, where you need to stand out in a feed.",
+      swatches: [["Lime pop", "#8CCB2E"], ["Forest", "#1E5E35"], ["Paper", "#FFFFFF"], ["Ink", "#1B2A1F"], ["Melon pink", "#FF5FA2"]],
+      type: [["Titan One", "Headings. Heavy, bubbly, toy-box lettering."], ["Nunito", "Text. Rounded and easy to read small."]],
+      bot: { style: "sticker", colors: { bgIn: "#D9F79A", bgOut: "#8CCB2E", lime: "#8CCB2E", ink: "#1B2A1F" } }, shadow: "hard"
+    },
+    workbench: {
+      feel: "The serious side. Dark workshop, lime as a status light, the mascot as a line drawing on a blueprint.",
+      best: "<b>Best for</b> freelance and studio work, technical docs, devlogs.",
+      swatches: [["Signal lime", "#B6E36A"], ["Night", "#121713"], ["Panel", "#1B221C"], ["Chalk", "#E7ECE0"], ["Spark orange", "#FF7A3D"]],
+      type: [["Unbounded", "Headings. Wide and engineered."], ["IBM Plex Sans + Mono", "Text and data. Reads like a spec sheet."]],
+      bot: { colors: {
+        ink: "#B6E36A", body: "#1B221C", shade: "#232C24", deep: "#2E392F", seam: "#4B5A47", slot: "#B6E36A",
+        hat: "#1B221C", hatHi: "#232C24", hatUnder: "#121713", lime: "#1B221C", limeHi: "#2E392F",
+        bgIn: "#24402B", bgOut: "#121713", eye: "#121713", ring: "#B6E36A" } }, shadow: "none"
+    }
+  };
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = id => document.getElementById(id);
+  let dir = "sprout", mood = "deadpan";
+  const draw = (o = {}) => robot({ ...DIRS[dir].bot, shadow: DIRS[dir].shadow, ...o, colors: { ...(DIRS[dir].bot.colors || {}), ...(o.colors || {}) } });
+
+  // ---- springs ------------------------------------------------------------
+  const springs = new Set();
+  const spring = (x, k, d) => ({ x, v: 0, t: x, k, d });
+  function tick(dt) {
+    for (const s of springs) { s.v += (-s.k * (s.x - s.t) - s.d * s.v) * dt; s.x += s.v * dt; }
+  }
+
+  // A rig makes any drawn robot hop on poke, with the hat and antennae on springs.
+  function rig(host) {
+    const svg = host.querySelector("svg");
+    const head = svg.querySelector(".head"), body = svg.querySelector(".body");
+    const hatRig = svg.querySelector(".hat").parentNode, base = hatRig.getAttribute("transform") || "";
+    const ant = svg.querySelector(".antennae");
+    const pupils = [...svg.querySelectorAll(".pupil")];
+    const r = { hop: { y: 0, v: 0 }, hat: spring(0, 260, 10), wob: spring(0, 120, 4), blink: 0, next: 1 + Math.random() * 2 };
+    springs.add(r.hat); springs.add(r.wob);
+    r.poke = () => { if (r.hop.y > -2) r.hop.v = -480; r.wob.v += (Math.random() < .5 ? -1 : 1) * 60; };
+    r.step = dt => {
+      r.hop.v += 1700 * dt; r.hop.y += r.hop.v * dt;
+      if (r.hop.y > 0) { if (r.hop.v > 150) { r.hat.v += r.hop.v * .8; r.wob.v += r.hop.v * .08; } r.hop.y = 0; r.hop.v = 0; }
+      r.hat.t = r.hop.y;
+      head && head.setAttribute("transform", `translate(0 ${r.hop.y.toFixed(2)})`);
+      body && body.setAttribute("transform", `translate(0 ${(r.hop.y * .55).toFixed(2)})`);
+      hatRig.setAttribute("transform", `translate(0 ${r.hat.x.toFixed(2)}) ${base}`);
+      ant.setAttribute("transform", `rotate(${r.wob.x.toFixed(2)} 256 110)`);
+      r.next -= dt;
+      if (r.next < 0) { r.blink = .13; r.next = 2 + Math.random() * 3; }
+      r.blink = Math.max(0, r.blink - dt);
+      pupils.forEach(p => p.setAttribute("transform", r.blink > 0 ? "translate(0 276) scale(1 .25) translate(0 -276)" : ""));
+    };
+    r.dispose = () => { springs.delete(r.hat); springs.delete(r.wob); };
+    return r;
+  }
+  const rigs = {};
+  function mount(id, html, rigged) {
+    const host = $(id);
+    host.innerHTML = html;
+    if (rigs[id]) { rigs[id].dispose(); delete rigs[id]; }
+    if (rigged) rigs[id] = rig(host);
+  }
+
+  // ---- wordmark hat drop --------------------------------------------------
+  const hatDrop = spring(0, 220, 9);
+  springs.add(hatDrop);
+  function dropHat() {
+    $("wmHat").innerHTML = draw({ style: "mark", viewBox: "84 34 344 176", shadow: "none" });
+    if (reduce) return;
+    hatDrop.x = -140; hatDrop.v = 0; hatDrop.t = 0;
+  }
+
+  // ---- render a direction -------------------------------------------------
+  function render() {
+    const D = DIRS[dir];
+    $("board").dataset.dir = dir;
+    document.querySelectorAll(".switch button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.dir === dir)));
+    $("feel").textContent = D.feel;
+    $("best").innerHTML = D.best;
+    $("swatches").innerHTML = D.swatches.map(([n, h]) => `<div class="sw"><i style="background:${h}"></i><b>${n}</b><code>${h}</code></div>`).join("");
+    $("typeNotes").innerHTML = D.type.map(([n, t]) => `<div><b>${n}</b>${t}</div>`).join("");
+    mount("heroBot", draw({ mood }), true);
+    mount("pokeBot", draw(), true);
+    mount("dragHead", draw({ style: "mark" }), false);
+    $("waitBot").innerHTML = draw({ style: "mark", mood: "sleepy" });
+    const wr = $("waitBot").querySelector(".hat"); wr && wr.parentNode.classList.add("hat-rig");
+    $("assetBadge").innerHTML = draw({ style: "mark" });
+    $("ytBot").innerHTML = draw({ mood: "surprised", ring: false });
+    $("avatars").innerHTML = [96, 56, 32].map(s => `<div style="width:${s}px">${draw()}</div>`).join("") +
+      [64, 32].map(s => `<div class="icon" style="width:${s}px;height:${s}px"><div style="width:${s * .86}px">${draw({ style: "mark" })}</div></div>`).join("");
+    $("moods").innerHTML = ["deadpan", "happy", "surprised", "sleepy"].map(m =>
+      `<div role="button" tabindex="0" data-mood="${m}"><div style="width:100%;max-width:110px">${draw({ mood: m })}</div>${m}</div>`).join("");
+    dropHat();
+  }
+
+  document.querySelectorAll(".switch button").forEach(b => b.addEventListener("click", () => { dir = b.dataset.dir; render(); }));
+  $("moods").addEventListener("click", e => {
+    const m = e.target.closest("[data-mood]"); if (!m) return;
+    mood = m.dataset.mood; mount("heroBot", draw({ mood }), true); rigs.heroBot.poke();
+  });
+  const pokeOn = (el, id) => {
+    el.addEventListener("pointerdown", () => rigs[id] && rigs[id].poke());
+    el.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); rigs[id] && rigs[id].poke(); } });
+  };
+  pokeOn($("heroStage"), "heroBot");
+  pokeOn($("pokeBot"), "pokeBot");
+  $("wordmark").addEventListener("pointerdown", dropHat);
+
+  // ---- press: squash and stretch -------------------------------------------
+  const sx = spring(1, 420, 14), sy = spring(1, 420, 14);
+  springs.add(sx); springs.add(sy);
+  const btn = $("pressBtn");
+  btn.addEventListener("pointerdown", () => { sx.t = 1.12; sy.t = .82; });
+  const release = () => { sx.t = 1; sy.t = 1; sx.v -= 3; sy.v += 5; };
+  btn.addEventListener("pointerup", release);
+  btn.addEventListener("pointerleave", () => { if (sx.t !== 1) release(); });
+  btn.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { sx.t = 1.12; sy.t = .82; } });
+  btn.addEventListener("keyup", release);
+
+  // ---- drag: jelly head on a spring ----------------------------------------
+  const dx = spring(0, 90, 7), dy = spring(0, 90, 7), rot = spring(0, 140, 6);
+  springs.add(dx); springs.add(dy); springs.add(rot);
+  let grab = null;
+  const head = $("dragHead");
+  head.addEventListener("pointerdown", e => {
+    head.setPointerCapture(e.pointerId);
+    grab = { x: e.clientX - dx.x, y: e.clientY - dy.y };
+  });
+  head.addEventListener("pointermove", e => {
+    if (!grab) return;
+    const tile = $("dragTile").getBoundingClientRect();
+    const lim = (v, m) => Math.max(-m, Math.min(m, v));
+    dx.t = lim(e.clientX - grab.x, tile.width / 2 - 50);
+    dy.t = lim(e.clientY - grab.y, tile.height / 2 - 70);
+  });
+  const drop = () => { grab = null; dx.t = 0; dy.t = 0; };
+  head.addEventListener("pointerup", drop);
+  head.addEventListener("pointercancel", drop);
+
+  // ---- loop ----------------------------------------------------------------
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 1 / 30); last = now;
+    tick(dt);
+    for (const r of Object.values(rigs)) r.step(dt);
+    $("wmHat").style.transform = `translateX(-50%) translateY(${hatDrop.x.toFixed(1)}px)`;
+    btn.style.transform = `scale(${sx.x.toFixed(3)}, ${sy.x.toFixed(3)})`;
+    rot.t = dx.v * .03;
+    const stretch = Math.min(Math.hypot(dx.v, dy.v) / 4000, .12);
+    head.style.transform = `translate(${dx.x.toFixed(1)}px, ${dy.x.toFixed(1)}px) rotate(${rot.x.toFixed(2)}deg) scale(${1 + stretch}, ${1 - stretch})`;
+    requestAnimationFrame(frame);
+  }
+
+  render();
+  if (!reduce) requestAnimationFrame(frame);
+})();
+</script>
